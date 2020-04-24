@@ -59,6 +59,9 @@ class SubmitWord extends React.Component {
     }
     render() {
         const { start, score, words } = this.props;
+        const progress = {
+            width: (start + 1) / words.length * 100 + '%'
+        };
         if (words[start]) {
             return (
                 <div className="word-app">
@@ -74,7 +77,7 @@ class SubmitWord extends React.Component {
                         <div className="word-translation">{start + 1}. {words[start].translation}</div>
                         <div className="word-def">{words[start].definition}</div>
                     </div>
-                    <div className="word-progress"></div>
+                    <div className="word-progress" style={progress}></div>
                 </div>
             );
         } else {
