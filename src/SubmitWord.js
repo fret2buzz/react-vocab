@@ -59,11 +59,13 @@ class SubmitWord extends React.Component {
     }
     render() {
         const { start, score, words } = this.props;
+        const percentage = (start + 1) / words.length * 100;
         const progress = {
-            width: (start + 1) / words.length * 100 + '%'
+            width: percentage >= 100 ? '100%' : percentage + '%'
         };
-        if (words[start]) {
-            return (
+        var newWords = words.filter((el) => (el.entered));
+        return (
+            <>
                 <div className="word-app">
                     <div className="word-form">
                         <label className="word-label" htmlFor="word">English word:</label>
@@ -74,36 +76,34 @@ class SubmitWord extends React.Component {
                         </div>
                     </div>
                     <div className="word-block">
-                        <div className="word-translation">{start + 1}. {words[start].translation}</div>
-                        <div className="word-def">{words[start].definition}</div>
+                        {words[start] && <>
+                            <div className="word-translation">{start + 1}. {words[start].translation}</div>
+                            <div className="word-def">{words[start].definition}</div>
+                        </>}
+                        <div className="word-progress" style={progress}></div>
+                        <br />
+                        <h2>Your result is {score} of {words.length}</h2>
+                        <table className="word-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Your word</th>
+                                    <th>English</th>
+                                    <th>Pronunciation</th>
+                                    <th>Translation</th>
+                                    <th>Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {newWords.map((word, index) => (
+                                    <WordLine key={'word' + index} item={word} index={index} />
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                    <div className="word-progress" style={progress}></div>
                 </div>
-            );
-        } else {
-            return (
-                <>
-                    <h2>Your result is {score} of {words.length}</h2>
-                    <table className="word-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Your word</th>
-                                <th>English</th>
-                                <th>Pronunciation</th>
-                                <th>Translation</th>
-                                <th>Definition</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {words.map((word, index) => (
-                                <WordLine key={'word' + index} item={word} index={index} />
-                            ))}
-                        </tbody>
-                    </table>
-                </>
-            );
-        }
+            </>
+        );
     }
 }
 export default SubmitWord;

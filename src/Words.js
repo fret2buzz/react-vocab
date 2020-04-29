@@ -13,7 +13,7 @@ class Words extends React.Component {
         })
         arrayNew = arrayNew.data;
         var m = arrayNew.length, t, i;
-
+    
         // While there remain elements to shuffle…
         while (m) {
             // Pick a remaining element…
